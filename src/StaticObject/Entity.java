@@ -1,3 +1,5 @@
+package StaticObject;
+
 abstract public class Entity {
     public Coordinates coordinates;
 

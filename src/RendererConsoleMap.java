@@ -1,9 +1,13 @@
+import StaticObject.Coordinates;
+import StaticObject.Entity;
+
 public class RendererConsoleMap {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_MAP_COLOR_WHITE = "\033[48;2;20;20;20m";
 
     public void render(Map map) {
+        System.out.println("=================================");
         for (int i = 0; i < Map.HEIGHT; i++) {
             String line = "";
             for (int j = 0; j < Map.WIDTH; j++) {
@@ -17,11 +21,11 @@ public class RendererConsoleMap {
             line += ANSI_RESET;
             System.out.println(line);
         }
-
+        System.out.println("=================================");
     }
 
     private String getEntitySprite(Entity entity) {
-        return colorizeSprite(" " + selectEntitySprite(entity));
+        return colorizeSprite(selectEntitySprite(entity));
     }
 
     private String selectEntitySprite(Entity entity) {
@@ -36,7 +40,7 @@ public class RendererConsoleMap {
     }
 
     private String getSpriteForEmptySquare() {
-        return colorizeSprite("   ");
+        return colorizeSprite("\u26AB");
     }
 
     private String colorizeSprite(String entity) {
