@@ -11,14 +11,23 @@ public class Map {
     public static final int HEIGHT = 10;
     public static final int WIDTH = 10;
 
+    public int[][] grid = new int[WIDTH][HEIGHT];
+
     public void setEntity(Entity entity, Coordinates coordinates) {
         if (entity.getClass().getSimpleName().equals("Grass")) {
             grass.put(coordinates, entity);
         } else if (entity.getClass().getSimpleName().equals("Herbivore")) {
             herbivore.put(coordinates, entity);
         }
+        grid[coordinates.x][coordinates.y] = 1;
         entities.put(coordinates, entity);
         entity.coordinates = coordinates;
+    }
+
+    public void moveEntity(Coordinates oldCoordinates, Coordinates newCoordinates) {
+        entities.remove(oldCoordinates);
+        setEntity(herbivore.get(oldCoordinates), newCoordinates);
+        herbivore.remove(oldCoordinates);
     }
 
     public void setupDefaulEntitiesPositions() {
