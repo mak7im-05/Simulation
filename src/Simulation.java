@@ -1,4 +1,9 @@
+import StaticObject.Coordinates;
+import StaticObject.Grass;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Simulation {
     private static final int NEXT_MOVE_SIMULATION = 1;
@@ -44,7 +49,7 @@ public class Simulation {
 
     private void startSimulation() {
         int userInput = 2;
-        while (true) {
+        while (!isGameOver()) {
             try {
                 userInput = InputUserCommands.inputInSimulation(userInput);
             } catch (IOException | InterruptedException e) {
@@ -56,6 +61,11 @@ public class Simulation {
                 System.out.println("You can enter: 1 - to pause, 2 - to continue, 3 - to stop");
             }
         }
+    }
+
+    private boolean isGameOver() {
+        List<Coordinates> listGrass = new ArrayList<>(worldMap.getEntitiesOfType(Herbivore.class).keySet());
+        return listGrass.isEmpty();
     }
 
     private void generateNewMap() {

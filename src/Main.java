@@ -15,7 +15,7 @@ public class Main {
 
 // Механика ХП
 // Механика размножения
-// IsGameOver()
+// IsGameOver() Done
 //Input basic setting for simulation
 //Раскидать по папкам
 //Проблема Node и Coordinates классов
