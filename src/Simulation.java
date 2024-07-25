@@ -1,7 +1,4 @@
-import StaticObject.Coordinates;
-
 import java.io.IOException;
-import java.util.List;
 
 public class Simulation {
     private static final int NEXT_MOVE_SIMULATION = 1;
@@ -12,67 +9,69 @@ public class Simulation {
     private static final int CONTINUE_SIMULATION = 2;
     private static final int STOP_SIMULATION = 3;
 
-    private final Map map = new Map();
+    private final WorldMap worldMap = new WorldMap();
     private final RendererConsoleMap renderer = new RendererConsoleMap();
-    private final Actions actions = new Actions(map);
+    private final Actions actions = new Actions(worldMap);
 
     Simulation() {
-        actions.initActions();
     }
 
     public void start() {
         System.out.println("Добро пожаловать на симуляцию!");
+        actions.initActions();
         rendererMap();
-        while (true) {
+        boolean finished_simulation = false;
+
+        while (!finished_simulation) {
             switch (InputUserCommands.input()) {
                 case NEXT_MOVE_SIMULATION:
-//                    int[][] grid = new int[Map.WIDTH][Map.HEIGHT];
-//                    for (Coordinates coordinates: map.entities.keySet()) {
-//                        grid[coordinates.x][coordinates.y] = 1;
-//                    }
-//                    Node start = new Node(0, 0);
-//                    Node end = new Node(8, 8);
-//                    List<Node> path = AStarAlgorithm.aStar(start, end, grid);
-//
-//                    if (!path.isEmpty()) {
-//                        System.out.println("Path found:");
-//                        for (Node node : path) {
-//                            System.out.println("(" + node.x + ", " + node.y + ")");
-//                        }
-//                    } else {
-//                        System.out.println("No path found");
-//                    }
+                    nextTurn();
                     break;
                 case START_SIMULATION:
-                    int userInput = 2;
-                    while (true) {
-                        try {
-                            userInput = InputUserCommands.inputInSimulation(userInput);
-                        } catch (IOException | InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                        if (userInput == STOP_SIMULATION) break;
-                        if (userInput == CONTINUE_SIMULATION) {
-                            nextTurn();
-                            System.out.println("You can enter: 1 - to pause, 2 - to continue, 3 - to stop");
-                        }
-                    }
-                case GENERATE_NEW_SIMULATION://generate new simulation's map;
+                    startSimulation();
+                    break;
+                case GENERATE_NEW_SIMULATION://generate new simulation's worldMap;
+                    generateNewMap();
                     break;
                 case EXIT_SIMULATION:
                     System.out.println("Конец Симуляции!");
+                    finished_simulation = true;
                     break;
+
             }
         }
     }
 
-    public void nextTurn() {
+    private void startSimulation() {
+        int userInput = 2;
+        while (true) {
+            try {
+                userInput = InputUserCommands.inputInSimulation(userInput);
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (userInput == STOP_SIMULATION) break;
+            if (userInput == CONTINUE_SIMULATION) {
+                nextTurn();
+                System.out.println("You can enter: 1 - to pause, 2 - to continue, 3 - to stop");
+            }
+        }
+    }
+
+    private void generateNewMap() {
+        worldMap.entities.clear();
+        worldMap.grid = new int[WorldMap.HEIGHT][WorldMap.WIDTH];
+        actions.initActions();
         rendererMap();
-        actions.turnActions();
+    }
+
+    public void nextTurn() {
+        actions.turnActions(worldMap);
+        rendererMap();
     }
 
     public void rendererMap() {
-        renderer.render(map);
+        renderer.render(worldMap);
     }
 
 }

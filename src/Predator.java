@@ -5,8 +5,4 @@ public class Predator extends Creature{
         super(coordinates);
     }
 
-    @Override
-    public void makeMove() {
-
-    }
 }

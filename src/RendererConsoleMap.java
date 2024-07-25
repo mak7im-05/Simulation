@@ -6,19 +6,19 @@ public class RendererConsoleMap {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_MAP_COLOR_WHITE = "\033[48;2;20;20;20m";
 
-    public void render(Map map) {
+    public void render(WorldMap worldMap) {
         System.out.println("=================================");
-        for (int i = 0; i < Map.HEIGHT; i++) {
-            String line = "";
-            for (int j = 0; j < Map.WIDTH; j++) {
+        for (int i = 0; i < WorldMap.HEIGHT; i++) {
+            StringBuilder line = new StringBuilder();
+            for (int j = 0; j < WorldMap.WIDTH; j++) {
                 Coordinates coordinates = new Coordinates(i, j);
-                if (map.isEmptySquare(coordinates)) {
-                    line += getSpriteForEmptySquare();
+                if (worldMap.isEmptySquare(coordinates)) {
+                    line.append(getSpriteForEmptySquare());
                 } else {
-                    line += getEntitySprite(map.getEntity(coordinates));
+                    line.append(getEntitySprite(worldMap.getEntity(coordinates)));
                 }
             }
-            line += ANSI_RESET;
+            line.append(ANSI_RESET);
             System.out.println(line);
         }
         System.out.println("=================================");

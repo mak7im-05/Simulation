@@ -1,12 +1,11 @@
 import StaticObject.*;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
-public class Map {
+public class WorldMap {
     public HashMap<Coordinates, Entity> entities = new HashMap<>();
-    public HashMap<Coordinates, Entity> grass = new HashMap<>();
-    public HashMap<Coordinates, Entity> herbivore = new HashMap<>();
 
     public static final int HEIGHT = 10;
     public static final int WIDTH = 10;
@@ -14,48 +13,49 @@ public class Map {
     public int[][] grid = new int[WIDTH][HEIGHT];
 
     public void setEntity(Entity entity, Coordinates coordinates) {
-        if (entity.getClass().getSimpleName().equals("Grass")) {
-            grass.put(coordinates, entity);
-        } else if (entity.getClass().getSimpleName().equals("Herbivore")) {
-            herbivore.put(coordinates, entity);
-        }
         grid[coordinates.x][coordinates.y] = 1;
         entities.put(coordinates, entity);
         entity.coordinates = coordinates;
     }
 
-    public void moveEntity(Coordinates oldCoordinates, Coordinates newCoordinates) {
+    public void makeMove(Coordinates oldCoordinates, Coordinates newCoordinates) {
+        Entity entity = getEntity(oldCoordinates);
+        setEntity(entity, newCoordinates);
         entities.remove(oldCoordinates);
-        setEntity(herbivore.get(oldCoordinates), newCoordinates);
-        herbivore.remove(oldCoordinates);
+        grid[oldCoordinates.x][oldCoordinates.y] = 0;
+    }
+
+    public Coordinates generateCoordinate() {
+        Random random = new Random();
+        int x = random.nextInt(WIDTH);
+        int y = random.nextInt(HEIGHT);
+        while (!isEmptySquare(new Coordinates(x, y))) {
+            x = random.nextInt(WIDTH);
+            y = random.nextInt(HEIGHT);
+        }
+        return new Coordinates(x, y);
     }
 
     public void setupDefaulEntitiesPositions() {
-        Random random = new Random();
-        for (int i = 0; i < 3; i++) {
-            int x = random.nextInt(WIDTH);
-            int y = random.nextInt(HEIGHT);
-            setEntity(new Rock(new Coordinates(x, y)), new Coordinates(x, y));
+        for (int i = 0; i < 15; i++) {
+            Coordinates coordinates = generateCoordinate();
+            setEntity(new Rock(coordinates), coordinates);
         }
-        for (int i = 0; i < 3; i++) {
-            int x = random.nextInt(WIDTH);
-            int y = random.nextInt(HEIGHT);
-            setEntity(new Tree(new Coordinates(x, y)), new Coordinates(x, y));
+        for (int i = 0; i < 15; i++) {
+            Coordinates coordinates = generateCoordinate();
+            setEntity(new Tree(coordinates), coordinates);
         }
-        for (int i = 0; i < 3; i++) {
-            int x = random.nextInt(WIDTH);
-            int y = random.nextInt(HEIGHT);
-            setEntity(new Grass(new Coordinates(x, y)), new Coordinates(x, y));
+        for (int i = 0; i < 20; i++) {
+            Coordinates coordinates = generateCoordinate();
+            setEntity(new Grass(coordinates), coordinates);
         }
-        for (int i = 0; i < 3; i++) {
-            int x = random.nextInt(WIDTH);
-            int y = random.nextInt(HEIGHT);
-            setEntity(new Predator(new Coordinates(x, y)), new Coordinates(x, y));
+        for (int i = 0; i < 1; i++) {
+            Coordinates coordinates = generateCoordinate();
+            setEntity(new Predator(coordinates), coordinates);
         }
-        for (int i = 0; i < 3; i++) {
-            int x = random.nextInt(WIDTH);
-            int y = random.nextInt(HEIGHT);
-            setEntity(new Herbivore(new Coordinates(x, y)), new Coordinates(x, y));
+        for (int i = 0; i < 10; i++) {
+            Coordinates coordinates = generateCoordinate();
+            setEntity(new Herbivore(coordinates), coordinates);
         }
     }
 
@@ -65,5 +65,16 @@ public class Map {
 
     public Entity getEntity(Coordinates coordinates) {
         return entities.get(coordinates);
+    }
+
+    public <T> HashMap<Coordinates, T> getEntitiesOfType(Class<T> typeEntity) {
+        HashMap<Coordinates, T> result = new HashMap<>();
+        for (Map.Entry<Coordinates, Entity> entry : entities.entrySet()) {
+            if (typeEntity.isInstance(entry.getValue())) {
+                //noinspection unchecked
+                result.put(entry.getKey(), (T) entry.getValue());
+            }
+        }
+        return result;
     }
 }
