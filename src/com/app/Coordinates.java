@@ -1,4 +1,4 @@
-package StaticObject;
+package com.app;
 
 import java.util.Objects;
 

@@ -1,3 +1,5 @@
+package com.app;
+
 public class Main {
     public static void main(String[] args) {
         Simulation matrix = new Simulation();
@@ -14,11 +16,11 @@ public class Main {
 //выделить функцию под генерацию координат DONE
 // IsGameOver() Done
 //WIDTH AND HEIGHT //DONE
+//Раскидать по папкам DONE
 
 // Механика ХП
 // Механика размножения
 //Input basic setting for simulation
-//Раскидать по папкам
 //Проблема Node и Coordinates классов
 //Node Вынести в другой файл
 //Сделать заполнение в процентном соотношение

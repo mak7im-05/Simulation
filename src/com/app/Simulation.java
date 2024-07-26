@@ -1,5 +1,6 @@
-import StaticObject.Coordinates;
-import StaticObject.Grass;
+package com.app;
+
+import com.app.entity.dynamics.Herbivore;
 
 import java.io.IOException;
 import java.util.ArrayList;

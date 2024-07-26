@@ -1,4 +1,9 @@
-import StaticObject.*;
+package com.app;
+
+import com.app.entity.dynamics.Entity;
+import com.app.entity.dynamics.StaticObject.*;
+import com.app.entity.dynamics.Herbivore;
+import com.app.entity.dynamics.Predator;
 
 import java.util.HashMap;
 import java.util.Map;

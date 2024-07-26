@@ -1,10 +1,11 @@
-import StaticObject.Coordinates;
-import StaticObject.Entity;
-import StaticObject.Grass;
+package com.app.entity.dynamics;
+
+import com.app.*;
+import com.app.entity.dynamics.StaticObject.*;
 
 import java.util.List;
 
-abstract class Creature extends Entity {
+abstract public class Creature extends Entity {
     public Creature(Coordinates coordinates) {
         super(coordinates);
         victim = this.getClass() == Predator.class ? Herbivore.class : Grass.class;

@@ -1,5 +1,7 @@
-import StaticObject.Coordinates;
-import StaticObject.Grass;
+package com.app;
+
+import com.app.entity.dynamics.StaticObject.*;
+import com.app.entity.dynamics.Creature;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
-import StaticObject.Coordinates;
-import StaticObject.Entity;
+package com.app;
+
+import com.app.entity.dynamics.Entity;
 
 public class RendererConsoleMap {
 

@@ -1,6 +1,6 @@
-import StaticObject.Coordinates;
+package com.app.entity.dynamics;
 
-import java.util.List;
+import com.app.Coordinates;
 
 public class Herbivore extends Creature {
 
