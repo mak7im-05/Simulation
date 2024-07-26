@@ -10,7 +10,7 @@ public class WorldMap {
     public static final int HEIGHT = 10;
     public static final int WIDTH = 10;
 
-    public int[][] grid = new int[WIDTH][HEIGHT];
+    public int[][] grid = new int[HEIGHT][WIDTH];
 
     public void setEntity(Entity entity, Coordinates coordinates) {
         grid[coordinates.x][coordinates.y] = 1;
@@ -27,11 +27,11 @@ public class WorldMap {
 
     public Coordinates generateCoordinate() {
         Random random = new Random();
-        int x = random.nextInt(WIDTH);
-        int y = random.nextInt(HEIGHT);
+        int x = random.nextInt(HEIGHT);
+        int y = random.nextInt(WIDTH);
         while (!isEmptySquare(new Coordinates(x, y))) {
-            x = random.nextInt(WIDTH);
-            y = random.nextInt(HEIGHT);
+            x = random.nextInt(HEIGHT);
+            y = random.nextInt(WIDTH);
         }
         return new Coordinates(x, y);
     }
