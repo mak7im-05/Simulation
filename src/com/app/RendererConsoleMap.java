@@ -1,6 +1,6 @@
 package com.app;
 
-import com.app.entity.dynamics.Entity;
+import com.app.entity.Entity;
 
 public class RendererConsoleMap {
 

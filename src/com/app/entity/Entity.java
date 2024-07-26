@@ -1,4 +1,4 @@
-package com.app.entity.dynamics;
+package com.app.entity;
 
 import com.app.Coordinates;
 

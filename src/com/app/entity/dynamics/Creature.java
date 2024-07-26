@@ -1,7 +1,8 @@
 package com.app.entity.dynamics;
 
 import com.app.*;
-import com.app.entity.dynamics.StaticObject.*;
+import com.app.entity.StaticObject.*;
+import com.app.entity.Entity;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ abstract public class Creature extends Entity {
         Node goal = pathFinder.getGoalWithMinCost(map, start);
         if (goal != null) {
             List<Node> path = pathFinder.aStar(start, goal, map.grid);
-            if(!path.isEmpty()) {
+            if (!path.isEmpty()) {
                 Node firstPathsStep = path.get(1);
                 if (firstPathsStep != null) {
                     map.makeMove(new Coordinates(start.x, start.y), new Coordinates(firstPathsStep.x, firstPathsStep.y));

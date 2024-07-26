@@ -17,7 +17,7 @@ public class InputUserCommands {
         while (true) {
             //Checing for errors
             while (true) {
-                if(scanner.hasNextInt()) {
+                if (scanner.hasNextInt()) {
                     x = scanner.nextInt();
                     break;
                 } else {
@@ -40,7 +40,7 @@ public class InputUserCommands {
         if (System.in.available() > 0) {
             if (scanner.hasNextInt()) {
                 int x = scanner.nextInt();
-                if(x >= 0 && x < 4) return x;
+                if (x >= 0 && x < 4) return x;
             } else {
                 System.out.println("Неправильный ввод. Введите целое число.");
                 scanner.next(); // очистка неверного ввода

@@ -1,6 +1,6 @@
 package com.app;
 
-import com.app.entity.dynamics.StaticObject.*;
+import com.app.entity.StaticObject.*;
 import com.app.entity.dynamics.Creature;
 
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Actions {
     public final WorldMap worldMap;
+
     public Actions(WorldMap worldMap) {
         this.worldMap = worldMap;
     }
@@ -24,7 +25,7 @@ public class Actions {
     private void spawnNewGrass(WorldMap worldMap) {
         List<Coordinates> listGrass = new ArrayList<>(worldMap.getEntitiesOfType(Grass.class).keySet());
         int cntGrass = listGrass.size();
-        if(cntGrass <= 10) {
+        if (cntGrass <= 10) {
             setupNewGrass(15 - cntGrass, worldMap);
         }
     }
@@ -38,8 +39,8 @@ public class Actions {
 
     private void makeMoveForCreatures(WorldMap worldMap) {
         List<Coordinates> listCreature = new ArrayList<>(worldMap.getEntitiesOfType(Creature.class).keySet());
-        for (Coordinates coordinates: listCreature) {
-            Creature creature =(Creature) worldMap.entities.get(coordinates);
+        for (Coordinates coordinates : listCreature) {
+            Creature creature = (Creature) worldMap.entities.get(coordinates);
             creature.makeMove(new Node(coordinates.x, coordinates.y), worldMap);
         }
     }

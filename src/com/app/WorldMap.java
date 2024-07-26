@@ -1,7 +1,7 @@
 package com.app;
 
-import com.app.entity.dynamics.Entity;
-import com.app.entity.dynamics.StaticObject.*;
+import com.app.entity.Entity;
+import com.app.entity.StaticObject.*;
 import com.app.entity.dynamics.Herbivore;
 import com.app.entity.dynamics.Predator;
 

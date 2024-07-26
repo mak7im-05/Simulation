@@ -1,6 +1,6 @@
 package com.app;
 
-import com.app.entity.dynamics.Entity;
+import com.app.entity.Entity;
 
 import java.util.*;
 
@@ -84,7 +84,7 @@ public class AStarAlgorithm {
             int currentCost = (int) heuristic(start, new Node(currentCell.x, currentCell.y));
             if (currentCost < minCost) {
                 minCost = currentCost;
-                coordinatesWithMinCost =  new Node(currentCell.x, currentCell.y);
+                coordinatesWithMinCost = new Node(currentCell.x, currentCell.y);
             }
         }
         return coordinatesWithMinCost;

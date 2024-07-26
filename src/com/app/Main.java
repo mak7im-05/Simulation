@@ -17,11 +17,11 @@ public class Main {
 // IsGameOver() Done
 //WIDTH AND HEIGHT //DONE
 //Раскидать по папкам DONE
+//Node Вынести в другой файл // DONE
 
 // Механика ХП
 // Механика размножения
 //Input basic setting for simulation
 //Проблема Node и Coordinates классов
-//Node Вынести в другой файл
 //Сделать заполнение в процентном соотношение
 //Подобрать хорошие параметры для игры

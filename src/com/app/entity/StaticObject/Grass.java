@@ -1,7 +1,7 @@
-package com.app.entity.dynamics.StaticObject;
+package com.app.entity.StaticObject;
 
 import com.app.Coordinates;
-import com.app.entity.dynamics.Entity;
+import com.app.entity.Entity;
 
 public class Grass extends Entity {
     public Grass(Coordinates coordinates) {
