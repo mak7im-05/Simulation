@@ -8,7 +8,7 @@ public class RendererConsoleMap {
     public static final String ANSI_MAP_COLOR_WHITE = "\033[48;2;20;20;20m";
 
     public void render(WorldMap worldMap) {
-        System.out.println("=================================");
+        printLine();
         for (int i = 0; i < WorldMap.HEIGHT; i++) {
             StringBuilder line = new StringBuilder();
             for (int j = 0; j < WorldMap.WIDTH; j++) {
@@ -22,7 +22,15 @@ public class RendererConsoleMap {
             line.append(ANSI_RESET);
             System.out.println(line);
         }
-        System.out.println("=================================");
+        printLine();
+        System.out.println("Кол-во Ходов:" + WorldMap.cntMove);
+        printLine();
+    }
+
+    public void printLine() {
+        StringBuilder line = new StringBuilder();
+        line.append("≣".repeat(WorldMap.WIDTH * 2));
+        System.out.println(line);
     }
 
     private String getEntitySprite(Entity entity) {

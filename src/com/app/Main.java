@@ -18,8 +18,11 @@ public class Main {
 //WIDTH AND HEIGHT //DONE
 //Раскидать по папкам DONE
 //Node Вынести в другой файл // DONE
+// Механика ХП DONE
+//Счетчик Ходов DONE
 
-// Механика ХП
+//Поправить вывод в консоль
+//Подумать над механикой скорости
 // Механика размножения
 //Input basic setting for simulation
 //Проблема Node и Coordinates классов

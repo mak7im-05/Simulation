@@ -12,8 +12,9 @@ import java.util.Random;
 public class WorldMap {
     public HashMap<Coordinates, Entity> entities = new HashMap<>();
 
-    public static final int HEIGHT = 10;
-    public static final int WIDTH = 10;
+    public static final int HEIGHT = 30;
+    public static final int WIDTH = 30;
+    public static int cntMove = 0;
 
     public int[][] grid = new int[HEIGHT][WIDTH];
 
@@ -81,5 +82,14 @@ public class WorldMap {
             }
         }
         return result;
+    }
+
+    public Class<? extends Entity> getTypeOfEntity(Coordinates coordinates) {
+        return entities.get(coordinates) != null ? entities.get(coordinates).getClass() : null;
+    }
+
+    public void deleteEntity(Coordinates neighbor) {
+        entities.remove(neighbor);
+        grid[neighbor.x][neighbor.y] = 0;
     }
 }

@@ -38,6 +38,7 @@ public class Simulation {
                     break;
                 case GENERATE_NEW_SIMULATION://generate new simulation's worldMap;
                     generateNewMap();
+                    WorldMap.cntMove = 0;
                     break;
                 case EXIT_SIMULATION:
                     System.out.println("Конец Симуляции!");

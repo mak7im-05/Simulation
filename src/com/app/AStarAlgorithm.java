@@ -6,8 +6,8 @@ import java.util.*;
 
 public class AStarAlgorithm {
 
-    private static final int[] dX = {-1, 1, 0, 0, 1, 1, -1, -1, 2, 0, -2, 0, 2, 2, -2, -2, 1, 2, 2, 1, -1, -2, -1, -2};
-    private static final int[] dY = {0, 0, -1, 1, -1, 1, -1, 1, 0, 2, 0, -2, -2, 2, -2, 2, 2, 1, -1, -2, -2, -1, 2, 1};
+    private static final int[] dX = {-1, 1, 0, 0, 1, 1, -1, -1};
+    private static final int[] dY = {0, 0, -1, 1, -1, 1, -1, 1};
 
     private final Class<? extends Entity> victim;
 
@@ -15,12 +15,26 @@ public class AStarAlgorithm {
         this.victim = victim;
     }
 
+    public static List<Coordinates> getAllNeighbor(Node start) {
+        List<Coordinates> neighbors = new ArrayList<>();
+        int x = start.x; // y
+        int y = start.y; // x
+        for (int row = x - 1; row < x + 2; ++row) {
+            for (int col = y - 1; col < y + 2; col++) {
+                if((row != x || col != y) && row >= 0 && col >= 0 && row < WorldMap.HEIGHT && col < WorldMap.WIDTH) {
+                    neighbors.add(new Coordinates(row, col));
+                }
+            }
+        }
+
+        return neighbors;
+    }
+
     public List<Node> aStar(Node start, Node goal, int[][] grid) {
         grid[goal.x][goal.y] = 0;
         PriorityQueue<Node> openSet = new PriorityQueue<>();
         Set<Node> closedSet = new HashSet<>();
         openSet.add(start);
-        int coefficient = victim.getSimpleName().equals("Grass") ? 1 : 3;
         while (!openSet.isEmpty()) {
             Node current = openSet.poll();
 
@@ -31,7 +45,7 @@ public class AStarAlgorithm {
 
             closedSet.add(current);
 
-            for (int i = 0; i < 8 * coefficient; i++) {
+            for (int i = 0; i < 8; i++) {
                 int newX = current.x + dX[i];
                 int newY = current.y + dY[i];
 

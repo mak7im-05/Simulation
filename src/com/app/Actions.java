@@ -18,6 +18,7 @@ public class Actions {
     }
 
     public void turnActions(WorldMap worldMap) {
+        WorldMap.cntMove++;
         makeMoveForCreatures(worldMap);
         spawnNewGrass(worldMap);
     }
@@ -41,6 +42,7 @@ public class Actions {
         List<Coordinates> listCreature = new ArrayList<>(worldMap.getEntitiesOfType(Creature.class).keySet());
         for (Coordinates coordinates : listCreature) {
             Creature creature = (Creature) worldMap.entities.get(coordinates);
+            if(creature == null) continue;
             creature.makeMove(new Node(coordinates.x, coordinates.y), worldMap);
         }
     }

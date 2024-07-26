@@ -11,23 +11,31 @@ abstract public class Creature extends Entity {
         super(coordinates);
         victim = this.getClass() == Predator.class ? Herbivore.class : Grass.class;
         speed = this.getClass() == Predator.class ? 2 : 1;
-        helthPoint = this.getClass() == Predator.class ? 3 : 5;
+        helthPoint = this.getClass() == Predator.class ? 20 : 5;
+        satiety = this.getClass() == Predator.class ? 5 : 4;
     }
-
     public int helthPoint;
+    public int satiety;
     public int speed;
     private final Class<? extends Entity> victim;
 
+
     public void makeMove(Node start, WorldMap map) {
+        Coordinates coordinates = new Coordinates(start.x, start.y);
+        if (satiety <= 0) helthPoint--;
+        if (helthPoint <= 0) {
+            map.deleteEntity(coordinates);
+            return;
+        }
         AStarAlgorithm pathFinder = new AStarAlgorithm(victim);
         Node goal = pathFinder.getGoalWithMinCost(map, start);
         if (goal != null) {
             List<Node> path = pathFinder.aStar(start, goal, map.grid);
-            if (!path.isEmpty()) {
-                Node firstPathsStep = path.get(1);
-                if (firstPathsStep != null) {
-                    map.makeMove(new Coordinates(start.x, start.y), new Coordinates(firstPathsStep.x, firstPathsStep.y));
-                }
+            if (path != null && !path.isEmpty()) {
+                int maxStepsPerMove = Math.min(speed, path.size());
+                Node move = path.get(maxStepsPerMove);
+                if (move.equals(goal)) move = path.get(maxStepsPerMove - 1);
+                map.makeMove(coordinates, new Coordinates(move.x, move.y));
             }
 
         }
