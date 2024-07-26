@@ -1,6 +1,7 @@
 package com.app;
 
 import com.app.entity.dynamics.Herbivore;
+import com.app.entity.dynamics.Predator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class Simulation {
     private static final int PAUSE_SIMULATION = 1;
     private static final int CONTINUE_SIMULATION = 2;
     private static final int STOP_SIMULATION = 3;
+    private static final int SETTING = 4;
 
     private final WorldMap worldMap = new WorldMap();
     private final RendererConsoleMap renderer = new RendererConsoleMap();
@@ -29,14 +31,17 @@ public class Simulation {
         boolean finished_simulation = false;
 
         while (!finished_simulation) {
-            switch (InputUserCommands.input()) {
+            switch (InputUser.inputActions()) {
                 case NEXT_MOVE_SIMULATION:
-                    nextTurn();
+                    if (!isGameOver()) nextTurn();
+                    else {
+                        System.out.println("Перезапусти карту!");
+                    }
                     break;
                 case START_SIMULATION:
                     startSimulation();
                     break;
-                case GENERATE_NEW_SIMULATION://generate new simulation's worldMap;
+                case GENERATE_NEW_SIMULATION:
                     generateNewMap();
                     WorldMap.cntMove = 0;
                     break;
@@ -53,7 +58,7 @@ public class Simulation {
         int userInput = 2;
         while (!isGameOver()) {
             try {
-                userInput = InputUserCommands.inputInSimulation(userInput);
+                userInput = InputUser.inputInSimulation(userInput);
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -66,8 +71,9 @@ public class Simulation {
     }
 
     private boolean isGameOver() {
-        List<Coordinates> listGrass = new ArrayList<>(worldMap.getEntitiesOfType(Herbivore.class).keySet());
-        return listGrass.isEmpty();
+        List<Coordinates> listHerbivore = new ArrayList<>(worldMap.getEntitiesOfType(Herbivore.class).keySet());
+        List<Coordinates> listPredator = new ArrayList<>(worldMap.getEntitiesOfType(Predator.class).keySet());
+        return listHerbivore.isEmpty() || listPredator.isEmpty();
     }
 
     private void generateNewMap() {
@@ -77,12 +83,12 @@ public class Simulation {
         rendererMap();
     }
 
-    public void nextTurn() {
+    private void nextTurn() {
         actions.turnActions(worldMap);
         rendererMap();
     }
 
-    public void rendererMap() {
+    private void rendererMap() {
         renderer.render(worldMap);
     }
 

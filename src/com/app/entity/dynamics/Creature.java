@@ -11,9 +11,10 @@ abstract public class Creature extends Entity {
         super(coordinates);
         victim = this.getClass() == Predator.class ? Herbivore.class : Grass.class;
         speed = this.getClass() == Predator.class ? 2 : 1;
-        helthPoint = this.getClass() == Predator.class ? 20 : 5;
-        satiety = this.getClass() == Predator.class ? 5 : 4;
+        helthPoint = this.getClass() == Predator.class ? 10 : 3;
+        satiety = this.getClass() == Predator.class ? 5 : 3;
     }
+
     public int helthPoint;
     public int satiety;
     public int speed;

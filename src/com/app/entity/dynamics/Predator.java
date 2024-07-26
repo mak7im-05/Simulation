@@ -21,6 +21,7 @@ public class Predator extends Creature {
                 if (herbivore.helthPoint <= 0) {
                     map.deleteEntity(neighbor);
                     satiety++;
+                    helthPoint++;
                 }
                 return;
             }

@@ -3,10 +3,10 @@ package com.app;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class InputUserCommands {
-    public static Scanner scanner = new Scanner(System.in);
+public class InputUser {
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public static int input() {
+    public static int inputActions() {
         System.out.println("Выбери действие:");
         System.out.println("1. Сделать одну итерацию");
         System.out.println("2. Запустить Симуляцию(Бесконечный цикл)");
@@ -16,14 +16,9 @@ public class InputUserCommands {
         int x;
         while (true) {
             //Checing for errors
-            while (true) {
-                if (scanner.hasNextInt()) {
-                    x = scanner.nextInt();
-                    break;
-                } else {
-                    System.out.println("Это не число! Введите число!");
-                }
-            }
+
+
+            x = scanner.nextInt();
             if (x == 1 || x == 2 || x == 3 || x == 0) break;
 
             System.out.println("Введите цифры обозначающее одно из действий:");
@@ -46,7 +41,30 @@ public class InputUserCommands {
                 scanner.next(); // очистка неверного ввода
             }
         }
-        Thread.sleep(1000);
+        Thread.sleep(2500);
         return current;
+    }
+
+    public static void setupBasicSettingForSimulation() {
+        System.out.println("Введите длину поля");
+        WorldMap.WIDTH = scanner.nextInt();
+
+        System.out.println("Введите высоту поля");
+        WorldMap.HEIGHT = scanner.nextInt();
+
+        System.out.println("Введите кол-во травы");
+        WorldMap.GRASS_CNT = scanner.nextInt();
+
+        System.out.println("Введите кол-во камней");
+        WorldMap.ROCK_CNT = scanner.nextInt();
+
+        System.out.println("Введите кол-во деревьев");
+        WorldMap.TREE_CNT = scanner.nextInt();
+
+        System.out.println("Введите кол-во Хищников");
+        WorldMap.PREDATOR_CNT = scanner.nextInt();
+
+        System.out.println("Введите кол-во кроликов");
+        WorldMap.HEVIRBORE_CNT = scanner.nextInt();
     }
 }

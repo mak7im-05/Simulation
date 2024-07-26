@@ -4,8 +4,8 @@ import com.app.entity.Entity;
 
 public class RendererConsoleMap {
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_MAP_COLOR_WHITE = "\033[48;2;20;20;20m";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_MAP_COLOR_WHITE = "\033[48;2;20;20;20m";
 
     public void render(WorldMap worldMap) {
         printLine();
@@ -27,9 +27,9 @@ public class RendererConsoleMap {
         printLine();
     }
 
-    public void printLine() {
+    private void printLine() {
         StringBuilder line = new StringBuilder();
-        line.append("≣".repeat(WorldMap.WIDTH * 2));
+        line.append("\uD83D\uDFF0".repeat(WorldMap.WIDTH));
         System.out.println(line);
     }
 

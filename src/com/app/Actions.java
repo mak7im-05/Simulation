@@ -14,6 +14,7 @@ public class Actions {
     }
 
     public void initActions() {
+        InputUser.setupBasicSettingForSimulation();
         worldMap.setupDefaulEntitiesPositions();
     }
 
@@ -26,8 +27,8 @@ public class Actions {
     private void spawnNewGrass(WorldMap worldMap) {
         List<Coordinates> listGrass = new ArrayList<>(worldMap.getEntitiesOfType(Grass.class).keySet());
         int cntGrass = listGrass.size();
-        if (cntGrass <= 10) {
-            setupNewGrass(15 - cntGrass, worldMap);
+        if (cntGrass <= WorldMap.GRASS_CNT) {
+            setupNewGrass(WorldMap.GRASS_CNT * 2 - cntGrass, worldMap);
         }
     }
 
@@ -42,7 +43,7 @@ public class Actions {
         List<Coordinates> listCreature = new ArrayList<>(worldMap.getEntitiesOfType(Creature.class).keySet());
         for (Coordinates coordinates : listCreature) {
             Creature creature = (Creature) worldMap.entities.get(coordinates);
-            if(creature == null) continue;
+            if (creature == null) continue;
             creature.makeMove(new Node(coordinates.x, coordinates.y), worldMap);
         }
     }

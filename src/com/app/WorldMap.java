@@ -10,13 +10,18 @@ import java.util.Map;
 import java.util.Random;
 
 public class WorldMap {
+    public static int ROCK_CNT;
+    public static int GRASS_CNT;
+    public static int TREE_CNT;
+    public static int HEVIRBORE_CNT;
+    public static int PREDATOR_CNT;
     public HashMap<Coordinates, Entity> entities = new HashMap<>();
 
-    public static final int HEIGHT = 30;
-    public static final int WIDTH = 30;
+    public static int HEIGHT;
+    public static int WIDTH;
     public static int cntMove = 0;
 
-    public int[][] grid = new int[HEIGHT][WIDTH];
+    public int[][] grid;
 
     public void setEntity(Entity entity, Coordinates coordinates) {
         grid[coordinates.x][coordinates.y] = 1;
@@ -35,7 +40,9 @@ public class WorldMap {
         Random random = new Random();
         int x = random.nextInt(HEIGHT);
         int y = random.nextInt(WIDTH);
-        while (!isEmptySquare(new Coordinates(x, y))) {
+        int cnt = 0;
+        while (!isEmptySquare(new Coordinates(x, y)) && cnt != 10) {
+            cnt++;
             x = random.nextInt(HEIGHT);
             y = random.nextInt(WIDTH);
         }
@@ -43,23 +50,24 @@ public class WorldMap {
     }
 
     public void setupDefaulEntitiesPositions() {
-        for (int i = 0; i < 15; i++) {
+        grid = new int[HEIGHT][WIDTH];
+        for (int i = 0; i < ROCK_CNT; i++) {
             Coordinates coordinates = generateCoordinate();
             setEntity(new Rock(coordinates), coordinates);
         }
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < TREE_CNT; i++) {
             Coordinates coordinates = generateCoordinate();
             setEntity(new Tree(coordinates), coordinates);
         }
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < GRASS_CNT; i++) {
             Coordinates coordinates = generateCoordinate();
             setEntity(new Grass(coordinates), coordinates);
         }
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < PREDATOR_CNT; i++) {
             Coordinates coordinates = generateCoordinate();
             setEntity(new Predator(coordinates), coordinates);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < HEVIRBORE_CNT; i++) {
             Coordinates coordinates = generateCoordinate();
             setEntity(new Herbivore(coordinates), coordinates);
         }
@@ -77,7 +85,6 @@ public class WorldMap {
         HashMap<Coordinates, T> result = new HashMap<>();
         for (Map.Entry<Coordinates, Entity> entry : entities.entrySet()) {
             if (typeEntity.isInstance(entry.getValue())) {
-                //noinspection unchecked
                 result.put(entry.getKey(), (T) entry.getValue());
             }
         }
