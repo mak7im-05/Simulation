@@ -36,7 +36,7 @@ public class Herbivore extends Creature {
                 }
                 return;
             } else if (map.getTypeOfEntity(neighbor) == null && helthPoint > 10 && satiety > 6) {
-                SpawnNewHerbivore(neighbor, map, start);
+                spawnNewHerbivore(neighbor, map, start);
                 return;
             }
         }
@@ -44,7 +44,7 @@ public class Herbivore extends Creature {
         super.makeMove(start, map);
     }
 
-    private void SpawnNewHerbivore(Coordinates coordinates, WorldMap map, Node start) {
+    private void spawnNewHerbivore(Coordinates coordinates, WorldMap map, Node start) {
         map.setEntity(new Herbivore(coordinates), coordinates);
         Herbivore parent = (Herbivore) map.entities.get(new Coordinates(start.x, start.y));
         parent.helthPoint -= 5;

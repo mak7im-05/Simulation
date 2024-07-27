@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Node implements Comparable<Node> {
     public int x, y;
-    public double g; // стоимость пути от начальной точки до текущей
-    public double h; // эвристическая оценка расстояния до конечной точки
-    public Node parent; // для восстановления пути
+    public double g; 
+    public double h;
+    public Node parent;
 
     public Node(int x, int y) {
         this.x = x;
