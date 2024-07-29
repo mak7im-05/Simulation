@@ -5,13 +5,13 @@ import com.app.entity.Entity;
 public class RendererConsoleMap {
 
     private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_MAP_COLOR_WHITE = "\033[48;2;20;20;20m";
+    private static final String ANSI_MAP_COLOR_WHITE = "\033[48;2;29;31;51m";
 
     public void render(WorldMap worldMap) {
-        printLine();
-        for (int i = 0; i < WorldMap.HEIGHT; i++) {
+        printLine(worldMap);
+        for (int i = 0; i < worldMap.getHeight(); i++) {
             StringBuilder line = new StringBuilder();
-            for (int j = 0; j < WorldMap.WIDTH; j++) {
+            for (int j = 0; j < worldMap.getWidth(); j++) {
                 Coordinates coordinates = new Coordinates(i, j);
                 if (worldMap.isEmptySquare(coordinates)) {
                     line.append(getSpriteForEmptySquare());
@@ -22,15 +22,11 @@ public class RendererConsoleMap {
             line.append(ANSI_RESET);
             System.out.println(line);
         }
-        printLine();
-        System.out.println("Кол-во Ходов:" + WorldMap.cntMove);
-        printLine();
+        printLine(worldMap);
     }
 
-    private void printLine() {
-        StringBuilder line = new StringBuilder();
-        line.append("\uD83D\uDFF0".repeat(WorldMap.WIDTH));
-        System.out.println(line);
+    private void printLine(WorldMap worldMap) {
+        System.out.println("\uD83D\uDFF0".repeat(worldMap.getWidth()));
     }
 
     private String getEntitySprite(Entity entity) {
@@ -49,7 +45,7 @@ public class RendererConsoleMap {
     }
 
     private String getSpriteForEmptySquare() {
-        return colorizeSprite("\u26AB");
+        return colorizeSprite("⚫");
     }
 
     private String colorizeSprite(String entity) {

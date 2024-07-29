@@ -15,21 +15,6 @@ public class AStarAlgorithm {
         this.victim = victim;
     }
 
-    public static List<Coordinates> getAllNeighbor(Node start) {
-        List<Coordinates> neighbors = new ArrayList<>();
-        int x = start.x; // y
-        int y = start.y; // x
-        for (int row = x - 1; row < x + 2; ++row) {
-            for (int col = y - 1; col < y + 2; col++) {
-                if((row != x || col != y) && row >= 0 && col >= 0 && row < WorldMap.HEIGHT && col < WorldMap.WIDTH) {
-                    neighbors.add(new Coordinates(row, col));
-                }
-            }
-        }
-
-        return neighbors;
-    }
-
     public List<Node> aStar(Node start, Node goal, int[][] grid) {
         grid[goal.x][goal.y] = 0;
         PriorityQueue<Node> openSet = new PriorityQueue<>();

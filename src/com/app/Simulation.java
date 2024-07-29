@@ -1,5 +1,6 @@
 package com.app;
 
+import com.app.actions.*;
 import com.app.entity.dynamics.Herbivore;
 import com.app.entity.dynamics.Predator;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
+    // Константы для выбора действий
     private static final int NEXT_MOVE_SIMULATION = 1;
     private static final int START_SIMULATION = 2;
     private static final int GENERATE_NEW_SIMULATION = 3;
@@ -15,47 +17,58 @@ public class Simulation {
     private static final int PAUSE_SIMULATION = 1;
     private static final int CONTINUE_SIMULATION = 2;
     private static final int STOP_SIMULATION = 3;
-    private static final int SETTING = 4;
 
-    private final WorldMap worldMap = new WorldMap();
+    private final WorldMap worldMap;
     private final RendererConsoleMap renderer = new RendererConsoleMap();
-    private final Actions actions = new Actions(worldMap);
+    private final List<Action> initActions = new ArrayList<>();
+    private final List<Action> turnActions = new ArrayList<>();
 
-    Simulation() {
+    Simulation(int width, int height) {
+        this.worldMap = new WorldMap(width, height);
+        createActions(worldMap, initActions, turnActions);
+
     }
 
     public void start() {
+        doActions(initActions);
         System.out.println("Добро пожаловать на симуляцию!");
-        actions.initActions();
-        rendererMap();
+        renderMap();
         boolean finished_simulation = false;
-
         while (!finished_simulation) {
             switch (InputUser.inputActions()) {
                 case NEXT_MOVE_SIMULATION:
-                    if (!isGameOver()) nextTurn();
-                    else {
-                        System.out.println("Перезапусти карту!");
-                    }
+                    if (!isGameOver()) {
+                        nextTurn();
+                    } else System.out.println("Перезапусти карту!");
                     break;
                 case START_SIMULATION:
                     startSimulation();
                     break;
                 case GENERATE_NEW_SIMULATION:
                     generateNewMap();
-                    WorldMap.cntMove = 0;
                     break;
                 case EXIT_SIMULATION:
                     System.out.println("Конец Симуляции!");
                     finished_simulation = true;
                     break;
-
             }
+            renderMap();
+
         }
     }
 
+    private void createActions(WorldMap worldMap, List<Action> initActions, List<Action> turnActions) {
+        initActions.add(new GrassEntityGenerateAction(worldMap));
+        initActions.add(new RockEntityGenerateAction(worldMap));
+        initActions.add(new TreeEntityGenerateAction(worldMap));
+        initActions.add(new HerviboreEntityGenerateAction(worldMap));
+        initActions.add(new PredatorEntityGenerateAction(worldMap));
+        turnActions.add(new MakeCreaturesAction());
+        turnActions.add(new GrassEntityGenerateAction(worldMap));
+    }
+
     private void startSimulation() {
-        int userInput = 2;
+        int userInput = CONTINUE_SIMULATION;
         while (!isGameOver()) {
             try {
                 userInput = InputUser.inputInSimulation(userInput);
@@ -65,7 +78,8 @@ public class Simulation {
             if (userInput == STOP_SIMULATION) break;
             if (userInput == CONTINUE_SIMULATION) {
                 nextTurn();
-                System.out.println("You can enter: 1 - to pause, 2 - to continue, 3 - to stop");
+                renderMap();
+                System.out.println("Ты можешь выбрать: 1 - пауза, 2 - продолжить, 3 - завершить");
             }
         }
     }
@@ -77,19 +91,21 @@ public class Simulation {
     }
 
     private void generateNewMap() {
-        worldMap.entities.clear();
-        worldMap.grid = new int[WorldMap.HEIGHT][WorldMap.WIDTH];
-        actions.initActions();
-        rendererMap();
+        worldMap.clear();
+        doActions(initActions);
     }
 
     private void nextTurn() {
-        actions.turnActions(worldMap);
-        rendererMap();
+        doActions(turnActions);
     }
 
-    private void rendererMap() {
+    private void doActions(List<Action> actions) {
+        for (Action el : actions) {
+            el.perform(worldMap);
+        }
+    }
+
+    private void renderMap() {
         renderer.render(worldMap);
     }
-
 }

@@ -1,32 +1,27 @@
 package com.app.entity.dynamics;
 
-import com.app.AStarAlgorithm;
 import com.app.Coordinates;
-import com.app.Node;
 import com.app.WorldMap;
 
 public class Predator extends Creature {
-    public Predator(Coordinates coordinates) {
-        super(coordinates);
-    }
 
     public static final int DAMAGE = 5;
 
     @Override
-    public void makeMove(Node start, WorldMap map) {
-        for (Coordinates neighbor : AStarAlgorithm.getAllNeighbor(start)) {
-            if (map.getTypeOfEntity(neighbor) == Herbivore.class) {
-                Herbivore herbivore = (Herbivore) map.getEntity(neighbor);
-                herbivore.helthPoint -= DAMAGE;
-                if (herbivore.helthPoint <= 0) {
-                    map.deleteEntity(neighbor);
+    public void makeMove(WorldMap worldMap, Coordinates start) {
+        for (Coordinates neighbor : getAllNeighbor(start, worldMap)) {
+            if (worldMap.getTypeOfEntity(neighbor) == Herbivore.class) {
+                Herbivore herbivore = (Herbivore) worldMap.getEntity(neighbor);
+                herbivore.healthPoint -= DAMAGE;
+                if (herbivore.healthPoint <= 0) {
+                    worldMap.deleteEntity(neighbor);
                     satiety++;
-                    helthPoint++;
+                    healthPoint++;
                 }
                 return;
             }
         }
         satiety--;
-        super.makeMove(start, map);
+        super.makeMove(worldMap, start);
     }
 }

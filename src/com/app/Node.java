@@ -4,13 +4,21 @@ import java.util.Objects;
 
 public class Node implements Comparable<Node> {
     public int x, y;
-    public double g; 
+    public double g;
     public double h;
     public Node parent;
 
     public Node(int x, int y) {
         this.x = x;
         this.y = y;
+        this.g = 0;
+        this.h = 0;
+        this.parent = null;
+    }
+
+    public Node(Coordinates coordinates) {
+        this.x = coordinates.x;
+        this.y = coordinates.y;
         this.g = 0;
         this.h = 0;
         this.parent = null;
