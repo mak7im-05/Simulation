@@ -38,7 +38,7 @@ public class AStarAlgorithm {
                     Node neighbor = new Node(newX, newY);
                     if (closedSet.contains(neighbor)) continue;
 
-                    double tentativeG = current.g + 1; // предполагаемая стоимость
+                    double tentativeG = current.g + 1;
 
                     if (!openSet.contains(neighbor) || tentativeG < neighbor.g) {
                         neighbor.g = tentativeG;
@@ -53,7 +53,7 @@ public class AStarAlgorithm {
             }
         }
         grid[goal.x][goal.y] = 1;
-        return Collections.emptyList(); // Путь не найден
+        return Collections.emptyList(); 
     }
 
     private static List<Node> reconstructPath(Node node) {
