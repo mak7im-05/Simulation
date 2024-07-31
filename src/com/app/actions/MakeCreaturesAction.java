@@ -13,9 +13,10 @@ public class MakeCreaturesAction extends Action {
     public void perform(WorldMap worldMap) {
         List<Coordinates> listCreature = new ArrayList<>(worldMap.getEntitiesOfType(Creature.class).keySet());
         for (Coordinates coordinates : listCreature) {
-            Creature creature = (Creature) worldMap.getEntity(coordinates);
-            if (creature == null) continue;
-            creature.makeMove(worldMap, coordinates);
+            if (!worldMap.isEmptySquare(coordinates)) {
+                Creature creature = (Creature) worldMap.getEntity(coordinates);
+                creature.makeMove(worldMap, coordinates);
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ abstract public class Creature extends Entity {
         AStarAlgorithm pathFinder = new AStarAlgorithm(victim);
         Node goal = pathFinder.getGoalWithMinCost(map, nodeStart);
         if (goal != null) {
-            List<Node> path = pathFinder.aStar(nodeStart, goal, map.getGrid());
+            List<Node> path = pathFinder.getMinPath(nodeStart, goal, map.getGrid());
             if (path != null && !path.isEmpty()) {
                 int maxStepsPerMove = Math.min(speed, path.size());
                 Node move = path.get(maxStepsPerMove);
@@ -43,18 +43,21 @@ abstract public class Creature extends Entity {
         }
     }
 
-    public static List<Coordinates> getAllNeighbor(Coordinates start, WorldMap worldMap) {
+    public List<Coordinates> getAllNeighbor(Coordinates start, WorldMap worldMap) {
         List<Coordinates> neighbors = new ArrayList<>();
         int x = start.x; // y
         int y = start.y; // x
         for (int row = x - 1; row < x + 2; ++row) {
             for (int col = y - 1; col < y + 2; col++) {
-                if ((row != x || col != y) && row >= 0 && col >= 0 && row < worldMap.getHeight() && col < worldMap.getWidth()) {
+                if (isValidCell(x, y, row, col, worldMap)) {
                     neighbors.add(new Coordinates(row, col));
                 }
             }
         }
-
         return neighbors;
+    }
+
+    private boolean isValidCell(int x, int y, int row, int col, WorldMap worldMap) {
+        return (row != x || col != y) && row >= 0 && col >= 0 && row < worldMap.getHeight() && col < worldMap.getWidth();
     }
 }

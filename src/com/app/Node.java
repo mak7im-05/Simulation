@@ -3,9 +3,10 @@ package com.app;
 import java.util.Objects;
 
 public class Node implements Comparable<Node> {
-    public int x, y;
-    public double g;
-    public double h;
+    public int x;
+    public int y;
+    public double g; // стоимости пути от начального узла
+    public double h; //эвристической стоимости
     public Node parent;
 
     public Node(int x, int y) {
@@ -24,13 +25,13 @@ public class Node implements Comparable<Node> {
         this.parent = null;
     }
 
-    public double f() {
+    public double totalCostOfNode() {
         return this.g + this.h;
     }
 
     @Override
     public int compareTo(Node other) {
-        return Double.compare(this.f(), other.f());
+        return Double.compare(this.totalCostOfNode(), other.totalCostOfNode());
     }
 
     @Override

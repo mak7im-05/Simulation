@@ -80,6 +80,11 @@ public class Simulation {
                 nextTurn();
                 renderMap();
                 System.out.println("Ты можешь выбрать: 1 - пауза, 2 - продолжить, 3 - завершить");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

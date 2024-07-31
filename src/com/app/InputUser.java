@@ -3,8 +3,11 @@ package com.app;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class InputUser {
+public final class InputUser {
     private static final Scanner scanner = new Scanner(System.in);
+
+    private InputUser() {
+    }
 
     public static int inputActions() {
         System.out.println("Выбери действие:");
@@ -14,11 +17,11 @@ public class InputUser {
         System.out.println("0. Выход из Симуляции");
         System.out.println();
 
-        int x;
+        int choice;
         while (true) {
             if (scanner.hasNextInt()) {
-                x = scanner.nextInt();
-                if (x == 1 || x == 2 || x == 3 || x == 0) {
+                choice = scanner.nextInt();
+                if (choice == 1 || choice == 2 || choice == 3 || choice == 0) {
                     break;
                 } else {
                     System.out.println("Введите цифры, обозначающие одно из действий:");
@@ -35,22 +38,21 @@ public class InputUser {
             System.out.println();
         }
 
-        return x;
+        return choice;
     }
 
     public static int inputInSimulation(int current) throws IOException, InterruptedException {
         if (System.in.available() > 0) {
             if (scanner.hasNextInt()) {
-                int x = scanner.nextInt();
-                if (x >= 0 && x < 4) {
-                    return x;
+                int choise = scanner.nextInt();
+                if (choise >= 0 && choise < 4) {
+                    return choise;
                 }
             } else {
                 System.out.println("Неправильный ввод. Введите целое число.");
                 scanner.next();
             }
         }
-        Thread.sleep(2000);
         return current;
     }
 }

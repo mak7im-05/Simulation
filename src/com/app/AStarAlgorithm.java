@@ -15,7 +15,7 @@ public class AStarAlgorithm {
         this.victim = victim;
     }
 
-    public List<Node> aStar(Node start, Node goal, int[][] grid) {
+    public List<Node> getMinPath(Node start, Node goal, int[][] grid) {
         grid[goal.x][goal.y] = 0;
         PriorityQueue<Node> openSet = new PriorityQueue<>();
         Set<Node> closedSet = new HashSet<>();
@@ -53,7 +53,7 @@ public class AStarAlgorithm {
             }
         }
         grid[goal.x][goal.y] = 1;
-        return Collections.emptyList(); 
+        return Collections.emptyList();
     }
 
     private static List<Node> reconstructPath(Node node) {

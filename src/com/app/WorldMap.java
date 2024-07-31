@@ -50,7 +50,11 @@ public class WorldMap {
 
     public Class<? extends Entity> getTypeOfEntity(Coordinates coordinates) {
         Entity entity = entities.get(coordinates);
-        return entity != null ? entity.getClass() : null;
+        if(entity != null) {
+            return entity.getClass();
+        } else {
+            return null; // null здесь пустая клетка
+        }
     }
 
     public void deleteEntity(Coordinates coordinates) {

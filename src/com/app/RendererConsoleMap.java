@@ -40,7 +40,7 @@ public class RendererConsoleMap {
             case "Grass" -> "\uD83C\uDF3F";
             case "Herbivore" -> "\uD83D\uDC07";
             case "Predator" -> "\uD83D\uDC06";
-            default -> null;
+            default -> throw new IllegalArgumentException("Unknown entity type: " + entity.getClass().getSimpleName());
         };
     }
 
